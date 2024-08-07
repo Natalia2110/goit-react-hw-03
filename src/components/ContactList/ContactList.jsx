@@ -3,13 +3,13 @@ import css from "./ContactList.module.css";
 
 import React from "react";
 
-const ContactList = ({ contacts }) => {
+const ContactList = ({ contacts, onDelete }) => {
   return (
     <ul className={css["contacts-list"]}>
-      {contacts.map(({ name, number, id }) => {
+      {contacts.map((contact) => {
         return (
-          <li key={id} className={css["contacts-item"]}>
-            <Contact name={name} number={number} />
+          <li key={contact.id} className={css["contacts-item"]}>
+            <Contact data={contact} onDelete={onDelete} />
           </li>
         );
       })}

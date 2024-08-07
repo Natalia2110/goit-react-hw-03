@@ -1,4 +1,4 @@
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { nanoid } from "nanoid";
 import * as Yup from "yup";
 // import { useId } from "react";
@@ -6,26 +6,47 @@ import css from "./ContactForm.module.css";
 import React from "react";
 
 const INITIAL_VALUES = {
-  name: "",
-  number: "",
+  contactName: "",
+  contactNumber: "",
 };
-const nameFieldId = nanoid();
-const numberFieldId = nanoid();
+// const nameFieldId = nanoid();
+// const numberFieldId = nanoid();
 
-const ContactValidationSchems = Yup.object().shape({
-  name: Yup.string()
+const phoneRegExp = /^[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/;
+
+const ContactValidationSchema = Yup.object().shape({
+  contactName: Yup.string()
     .required("Ім'я контакту є обов'язковим")
     .min(3, "Ім'я має бути більше 3-х символів")
     .max(50, "Ім'я має бути меньше 50 символів"),
+  contactNumber: Yup.string()
+    .matches(
+      phoneRegExp,
+      "Номер телефону має співпадати з форматом 'xxx-xxx-xx-xx'"
+    )
+    .required("Номер телефону є обов'язковий"),
 });
 
-const ContactForm = () => {
-  const addContact = (values, actions) => {
-    console.log(values);
+const ContactForm = ({ onAddContact }) => {
+  const handleOnAddContact = (values, actions) => {
+    // console.log(values);
+    const contactObject = {
+      name: values.contactName,
+      number: values.contactNumber,
+    };
+
+    console.log(contactObject);
+    onAddContact(contactObject);
+
     actions.resetForm();
   };
+
   return (
-    <Formik initialValues={INITIAL_VALUES} onSubmit={addContact}>
+    <Formik
+      initialValues={INITIAL_VALUES}
+      onSubmit={handleOnAddContact}
+      validationSchema={ContactValidationSchema}
+    >
       <Form className={css.form}>
         <label className={css["form-label"]}>
           <span className={css["form-span"]}>Name</span>
@@ -34,8 +55,12 @@ const ContactForm = () => {
             type="text"
             name="contactName"
             placeholder="Max Smith"
-            id={nameFieldId}
-          ></Field>
+          />
+          <ErrorMessage
+            name="contactName"
+            component="span"
+            className={css.error}
+          />
         </label>
         <label className={css["form-label"]}>
           <span className={css["form-span"]}>Number</span>
@@ -43,9 +68,13 @@ const ContactForm = () => {
             className={css.field}
             type="tel"
             name="contactNumber"
-            placeholder="+(38)0501234567"
-            id={numberFieldId}
-          ></Field>
+            placeholder="050-123-45-67"
+          />
+          <ErrorMessage
+            name="contactNumber"
+            component="span"
+            className={css.error}
+          />
         </label>
 
         <button className={css.btn} type="submit">

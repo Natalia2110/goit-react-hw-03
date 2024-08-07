@@ -49,3 +49,11 @@
   background-color: rgba(51, 108, 229, 0.54);
   color: rgb(12, 40, 99);
 }
+.error {
+  font-size: 14px;
+  color: rgb(126, 26, 113);
+  background-color: transparent;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 5px;
+}

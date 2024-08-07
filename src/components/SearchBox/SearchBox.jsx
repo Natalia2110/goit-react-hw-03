@@ -9,7 +9,7 @@ const SearchBox = ({ value, onFilter }) => {
         className={css["search-input"]}
         type="text"
         value={value}
-        onChange={(e) => onFilter(e.target.value)}
+        onChange={onFilter}
         placeholder="Enter profile name"
       ></input>
     </div>
