@@ -18,7 +18,7 @@ function App() {
   // console.log("inputValue", inputValue);
 
   useEffect(() => {
-    console.log("state");
+    // console.log("state");
     window.localStorage.setItem("contactsValue", JSON.stringify(contacts));
   }, [contacts]);
 
@@ -27,7 +27,7 @@ function App() {
       ...friend,
       id: nanoid(),
     };
-    console.log("onAddContact", newContact);
+    // console.log("onAddContact", newContact);
     setContacts([newContact, ...contacts]);
   };
   // console.log(onAddContact);

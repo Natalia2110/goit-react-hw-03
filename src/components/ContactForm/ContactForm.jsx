@@ -35,7 +35,7 @@ const ContactForm = ({ onAddContact }) => {
       number: values.contactNumber,
     };
 
-    console.log(contactObject);
+    // console.log(contactObject);
     onAddContact(contactObject);
 
     actions.resetForm();
